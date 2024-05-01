@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import MemoElem from "./components/MemoElem";
+import MemoInput from "./components/MemoInput";
+import MemoBoard from "./components/MemoBoard";
+import { useMemoStore } from "./store/MemoList";
 
-function App() {
+const App = () => {
+  const { memoList } = useMemoStore();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <MemoBoard>
+        {memoList.length ? (
+          memoList.map((e) => {
+            return (
+              <MemoElem key={e.id} id={e.id}>
+                {e.content}
+              </MemoElem>
+            );
+          })
+        ) : (
+          <span>메모를 입력해주세요</span>
+        )}
+      </MemoBoard>
+      <MemoInput />
+    </>
   );
-}
+};
 
 export default App;
